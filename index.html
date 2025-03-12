@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Generating QR Codes</title>
+    <style>
+      #input {
+        width: 45%;
+        padding: 10px;
+        margin: 10px 0;
+        font-size: 16px;
+      }
+      #qr {
+        margin: 25px;
+      }
+    </style>
+    <script src="qrcode.js"></script>
+  </head>
+  <body>
+    <h1>Generating QR Codes</h1>
+    <input type="text" name="myInput" id="myInput" />
+    <div id="qr"></div>
+    <button id="downloadBtn">Download</button>
+    <script>
+      var qrcode = new QRCode("qr", {
+        text: "http://jindo.dev.naver.com/collie",
+        width: 250,
+        height: 250,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H,
+      });
+      const myInput = document.getElementById("myInput");
+
+      myInput.addEventListener("keyup", function () {
+        let input = myInput.value;
+
+        qrcode.makeCode(input);
+      });
+
+      document.getElementById("downloadBtn").onclick = () => {
+        let img = document.querySelector("#qr img");
+        let link = document.createElement("a");
+        link.href = img.src;
+        link.download = "QRCode.png";
+        link.click();
+      };
+    </script>
+  </body>
+</html>
